@@ -37,7 +37,7 @@
  * either the BSD or the GPL.
  */
 
-#ifdef _X_EVENT_
+#ifndef _X_EVENT_
 #define _X_EVENT_
 
 #define MAX_EVENT_POOL 2048
