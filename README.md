@@ -1,4 +1,5 @@
 # xevent
 epoll/kqueue simple interface 
 
-will support select on windows
+later, will support select on windows
+
