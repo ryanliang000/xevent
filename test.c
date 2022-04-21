@@ -38,6 +38,10 @@ int callback(int fd, int filter)
       unregxevent(fd);
     }
   }
+  else{
+    LOG_E("receive fd error, filter %d", filter);
+	unregxevent(fd);
+  }
   return 0;
 }
 
