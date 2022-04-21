@@ -53,7 +53,7 @@ static char* __gettime(){
         local->tm_hour, local->tm_min, local->tm_sec);
    return buf;
 }
-#define _LOG_BASE(fd, title, ...)                                                    \
+#define _LOG(fd, title, ...)                                                    \
   fprintf(fd, "%s ", __gettime());                                              \
   fprintf(fd, title);                                                          \
   fprintf(fd, __VA_ARGS__);                                                    \
