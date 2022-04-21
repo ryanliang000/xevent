@@ -164,7 +164,7 @@ int call_event_func(struct kevent &kevt) {
     LOG_D("call_event_func return NULL, fd=%d", int(kevt.ident));
     return -1;
   }
-  return func(kevt.ident, kevt.filter);
+  return func(kevt.ident, filter2xfilter(kevt.filter));
 }
 struct kevent _events[MAX_EVENT_RECV];
 struct timespec _tvs;
