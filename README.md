@@ -22,6 +22,7 @@ Using reactor mode. Encapsulation interface of epoll and kqueue and select.
 - dispatchxevent
 
 
-there is an example in test.c.
+## there is an example of the interface using
+in file test.c
 
 
