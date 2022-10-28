@@ -1,6 +1,6 @@
 # xevent
 
-Encapsulation interface of epoll and kqueue and select.
+Using reactor mode. Encapsulation interface of epoll and kqueue and select.
 
 
 - epoll for linux
