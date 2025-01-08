@@ -1,7 +1,9 @@
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include "xevent.h"
+#include "winsock2.h"
+#define sleep(sec) Sleep(sec*1000)
+#pragma comment(lib, "ws2_32.lib")
 #include <sys/types.h>
 #include <stdio.h>
 
@@ -52,7 +54,6 @@ int callback_client(int fd, int filter){
     if (recv(fd, buff, sizeof(buff) - 1, 0) > 0) {
       LOG_I("Client Recv: %s", buff);
     }
-    sleep(2);
     char reply[] = "hi from client";
     if (send(fd, reply, sizeof(reply), 0) == sizeof(reply)){
       LOG_I("Client Send: %s", reply);
@@ -70,10 +71,18 @@ int callback_client(int fd, int filter){
     LOG_E("receive fd error, filter %d", filter);
     unregxevent(fd);
   }
+  sleep(2);
   return 0;
 }
 int main(int argc, char** argv)
 {
+  WSADATA wsaData;
+  int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);    // init winsock
+  if (iResult != 0) {
+    LOG_E("WSAStartup failed: %d\n", iResult);
+    return 1;
+  }
+
   // server and client socket
   struct sockaddr_in serv = { 0 }, cli = {0};
   serv.sin_family = AF_INET;
@@ -89,7 +98,6 @@ int main(int argc, char** argv)
     LOG_E("init socket failed!");
     return -1;
   }
-  
   if (bind(fd, (struct sockaddr*)&serv, sizeof(serv)) == -1) {
     LOG_E("bind server failed!");
     return -1;
@@ -124,6 +132,8 @@ int main(int argc, char** argv)
       break;
     }
   }
+
+  WSACleanup(); // cleanup winsock
   
   return 0;
 }
